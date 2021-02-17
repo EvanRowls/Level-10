@@ -61,39 +61,6 @@ namespace Game1
             
         }
 
-        public static void Retreat() 
-        {
-            Player.PlayerEndHealth = Player.PlayerHealth;
-            if (Monster.monsterFleeATKChance == 0)
-            {
-                if (Player.PlayerEndHealth == Player.PlayerStartHealth)
-                {
-                    Console.WriteLine("You escape succesfully.\n");
-                    End();
-                }
-                else
-                {
-                    Console.WriteLine("You manage to escape without further injury.\n");
-                    End();
-                }
-            }
-            else
-            {
-                int FleeDamage = (Monster.MonsterAttack * Monster.monsterFleeATKChance)/10;
-                if (FleeDamage == 0)
-                {
-                    Console.WriteLine("You escape succesfully.\n");
-                    End();
-                }
-                else
-                {
-                    Console.WriteLine("As you flee, the monster gets in one more attack, dealing " + FleeDamage + " points of damage.\n");
-                    Player.PlayerHealth -= FleeDamage;
-                    End();
-                }
-            }
-        }
-
         public static void PostBattle()
         {
             Console.WriteLine("Press Enter to Continue on or I to open your inventory.\n");
@@ -114,25 +81,34 @@ namespace Game1
         public static void Loot()
         {
             Random rnd = new Random();
-            int chance = rnd.Next(4);
-            if (chance == 1)
+            int chance = rnd.Next(2);
+            if (chance == 1) //did you find any items
             {
-                switch (rnd.Next(2))
+                switch (rnd.Next(4))  //What did you find
                 {
                     case 0:
-                        Console.WriteLine("You found a health potion.\n");
-                        Player.HealingPotions += 1;
+                        Console.WriteLine("You found an instant health potion.\n");
+                        Player.InstantHealthPotions += 1;
                         break;
                     case 1:
-                        Console.WriteLine("You found a damage boost potion.\n");
-                        Player.AttackPotions += 1;
+                        Console.WriteLine("You found an attack potion.\n");
+                        Player.SingleAttackPotions += 1;
                         break;
                     case 2:
-                        Console.WriteLine("You found a health potion and a damage boost potion.\n");
+                        Console.WriteLine("You found an instant health potion and an attack potion.\n");
+                        Player.InstantHealthPotions += 1;
+                        Player.SingleAttackPotions += 1;
+                        break;
+                    case 3:
+                        Console.WriteLine("You found a strength potion");
+                        Player.MultiAttackPotions += 1;
+                        break;
+                    case 4:
+                        Console.WriteLine("You found a healing potion");
                         Player.HealingPotions += 1;
-                        Player.AttackPotions += 1;
                         break;
                     default:
+                        Console.WriteLine("If you're seeing this message, something very strange has happened.");
                         break;
                 }
             }

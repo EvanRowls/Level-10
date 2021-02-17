@@ -4,8 +4,6 @@ namespace Game1
 {
     class Battle
     {
-        public static bool PotionDamageBoostActive = false;
-
         public static void Start()
         {
             Monster.Create();
@@ -14,7 +12,6 @@ namespace Game1
             Console.WriteLine("You are level " + Player.PlayerLVL + ".\n");
             Console.WriteLine("You have " + Player.PlayerHealth + " HP.\n");
             Console.WriteLine("You have " + Player.LimitBreak + " Tech points.\n");
-            //Console.WriteLine("You have " + Player.Potions + " Healing Potions\n");
 
             Console.WriteLine("You have encoutered a Level " + Monster.monsterLVL + " monster.\n");
 
@@ -29,6 +26,7 @@ namespace Game1
                                   "5 - Retreat\n");
 
                 string PlayerAction = Console.ReadLine();
+                Console.WriteLine("\n");
 
                 switch (PlayerAction)
                 {
@@ -51,20 +49,32 @@ namespace Game1
                         Console.WriteLine("Please choose an action.\n");
                         break;
                 }
+                Console.WriteLine("You go here");
+                PotionEffects();
+
             }
             
         }
 
         public static void Attack()
         {
-            if (PotionDamageBoostActive)
+            Player.PlayerAttack = Player.PlayerAttack * Player.PlayerLVL;
+
+            if (Player.AttackPotionDamageBoostActive)
             {
-                int damage = Player.PlayerAttack * Player.PotionDamageBoost;
-                Monster.MonsterHP -= Player.PlayerAttack * Player.PotionDamageBoost;
+                int damage = Player.PlayerAttack * Player.AttackPotionDamageBoost;
+                Monster.MonsterHP -= Player.PlayerAttack * Player.AttackPotionDamageBoost;
 
                 Console.WriteLine("\nYou deal " + damage + " points of damage to the monster.\n");
-                PotionDamageBoostActive = false;
-            } else
+                Player.AttackPotionDamageBoostActive = false;
+            } else if (Player.MultiAttackPotionActive)
+            {
+                int damage = Player.PlayerAttack * Player.MultiAttackPotionBoost;
+                Monster.MonsterHP -= Player.PlayerAttack * Player.MultiAttackPotionBoost;
+
+                Console.WriteLine("\nYou deal " + damage + " points of damage to the monster.\n");
+            }
+            else
             {
                 Monster.MonsterHP -= Player.PlayerAttack;
 
@@ -152,11 +162,9 @@ namespace Game1
 
         public static void SuperAttack()
         {
-            int PlayerSuper = Player.PlayerAttack * 15;
-
             if (Player.LimitBreak < 100)
             {
-                Console.WriteLine("Not enough tech points.\n You only have " + Player.LimitBreak + " tech points.");
+                Console.WriteLine("Not enough tech points.\nYou only have " + Player.LimitBreak + " tech points.");
             }
             else
             {
@@ -164,51 +172,94 @@ namespace Game1
 
                 string limitChoice = Console.ReadLine();
 
-                if (limitChoice == "1")
+                switch (limitChoice)
                 {
-                    int regain = Player.PlayerMaxHealth / 2;
-
-                    Player.PlayerHealth += regain;
-
-                    Console.WriteLine("You regain " + regain + " HP.");
-                }
-                else if (limitChoice == "2")
-                {
-                    Monster.MonsterHP -= PlayerSuper;
-
-                    Console.WriteLine("\nYou deal " + PlayerSuper + " points of damage to the monster.\n");
-
-                    Player.LimitBreak -= 100;
-
-                    if (Monster.MonsterHP <= 0)
-                    {
-                        Aftermath.End();
-                    }
-                    else
-                    {
-                        Player.PlayerHealth -= Monster.MonsterAttack;
-
-                        Console.WriteLine("You receive " + Monster.MonsterAttack + " points of damage.\n");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Please choose to heal or attack.");
+                    case "1":
+                        int regain = Player.PlayerMaxHealth / 2;
+                        Player.PlayerHealth += regain;
+                        Console.WriteLine("You regain " + regain + " HP.");
+                        break;
+                    case "2":
+                        int PlayerSuper = Player.PlayerAttack * 15;
+                        Monster.MonsterHP -= PlayerSuper;
+                        Console.WriteLine("\nYou deal " + PlayerSuper + " points of damage to the monster.\n");
+                        Player.LimitBreak -= 100;
+                        if (Monster.MonsterHP <= 0)
+                        {
+                            Aftermath.End();
+                        }
+                        else
+                        {
+                            Player.PlayerHealth -= Monster.MonsterAttack;
+                            Console.WriteLine("You receive " + Monster.MonsterAttack + " points of damage.\n");
+                            if (Player.PlayerHealth <= 0)
+                            {
+                                Aftermath.End();
+                            }
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Please choose to heal or attack.");
+                        break;
                 }
             }
-
-            Console.WriteLine("You have " + Player.PlayerHealth + " HP left.\n");
-
-            Console.WriteLine("You have " + Player.LimitBreak + " tech points.\n");
-
-            Aftermath.End();
-
         }
 
         public static void Retreat() 
         {
             Console.WriteLine("You attempt to flee.");
-            Aftermath.Retreat();
+            Player.PlayerEndHealth = Player.PlayerHealth;
+            if (Monster.monsterFleeATKChance == 0)
+            {
+                if (Player.PlayerEndHealth == Player.PlayerStartHealth)
+                {
+                    Console.WriteLine("You escape succesfully.\n");
+                    Aftermath.End();
+                }
+                else
+                {
+                    Console.WriteLine("You manage to escape without further injury.\n");
+                    Aftermath.End();
+                }
+            }
+            else
+            {
+                int FleeDamage = (Monster.MonsterAttack * Monster.monsterFleeATKChance) / 10;
+                if (FleeDamage == 0)
+                {
+                    Console.WriteLine("You escape succesfully.\n");
+                    Aftermath.End();
+                }
+                else
+                {
+                    Console.WriteLine("As you flee, the monster gets in one more attack, dealing " + FleeDamage + " points of damage.\n");
+                    Player.PlayerHealth -= FleeDamage;
+                    Aftermath.End();
+                }
+            }
+        }
+
+        public static void PotionEffects()
+        {
+            if (Player.HealingPotionActive)
+            {
+                Player.PlayerHealth += 20;
+                Console.WriteLine("The effects of the healing poiton raise your health to " + Player.PlayerHealth);
+                Player.HealingPotionDuration -= 1;
+                if (Player.HealingPotionDuration <= 0)
+                {
+                    Player.HealingPotionActive = false;
+                }
+            }
+
+            if (Player.MultiAttackPotionActive)
+            {
+                Player.MultiAttackPotionDuration -= 1;
+                if (Player.MultiAttackPotionDuration <= 0)
+                {
+                    Player.MultiAttackPotionActive = false;
+                }
+            }
         }
     }
 }
