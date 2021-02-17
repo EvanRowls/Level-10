@@ -10,6 +10,8 @@ namespace Game1
         public static int LimitBreak = 0;
         public static string PlayerName = "default";
 
+        //Inventory
+        public static int Gold = 100;
         public static int TotalPotions;
         public static int InstantHealthPotions = 3;
         public static int HealingPotions = 1;
@@ -39,7 +41,7 @@ namespace Game1
 
         public static void Inventory() 
         {
-            TotalPotions = InstantHealthPotions + SingleAttackPotions;
+            TotalPotions = InstantHealthPotions + SingleAttackPotions + HealingPotions + MultiAttackPotions;
             Console.WriteLine(PlayerName + "'s Inventory\n" + 
                               "-------------\n" + 
                               "1 - Potions\n" +

@@ -63,18 +63,45 @@ namespace Game1
 
         public static void PostBattle()
         {
-            Console.WriteLine("Press Enter to Continue on or I to open your inventory.\n");
-            string choice = Console.ReadLine();
-            choice = choice.ToUpper();
+            Random rnd = new Random();
 
-            switch (choice)
+            if (rnd.Next(2) == 1)
             {
-                case "I":
-                    Player.Inventory();
-                    PostBattle();
-                    break;
-                default:
-                    break;
+                Console.WriteLine("You come across a shop.\n" +
+                                  "S - enter shop\n" +
+                                  "I - open your inventory.\n" +
+                                  "Enter - Continue on\n");
+                string choice = Console.ReadLine();
+                choice = choice.ToUpper();
+
+                switch (choice)
+                {
+                    case "S":
+                        Shop.Open();
+                        break;
+                    case "I":
+                        Player.Inventory();
+                        PostBattle();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Press Enter to Continue on or I to open your inventory.\n");
+                string choice = Console.ReadLine();
+                choice = choice.ToUpper();
+
+                switch (choice)
+                {
+                    case "I":
+                        Player.Inventory();
+                        PostBattle();
+                        break;
+                    default:
+                        break;
+                }
             }
         }
         
