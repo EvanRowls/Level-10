@@ -1,0 +1,6 @@
+C:\Users\Kalanaed\Desktop\VS\Game1\Game1\bin\Debug\Game1.exe.config
+C:\Users\Kalanaed\Desktop\VS\Game1\Game1\bin\Debug\Game1.exe
+C:\Users\Kalanaed\Desktop\VS\Game1\Game1\bin\Debug\Game1.pdb
+C:\Users\Kalanaed\Desktop\VS\Game1\Game1\obj\Debug\Game1.csprojResolveAssemblyReference.cache
+C:\Users\Kalanaed\Desktop\VS\Game1\Game1\obj\Debug\Game1.exe
+C:\Users\Kalanaed\Desktop\VS\Game1\Game1\obj\Debug\Game1.pdb
