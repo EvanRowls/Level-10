@@ -4,6 +4,7 @@ namespace Game1
 {
     class Battle
     {
+        public static bool PotionDamageBoostActive = false;
 
         public static void Start()
         {
@@ -21,7 +22,11 @@ namespace Game1
 
             while (Player.PlayerHealth > 0 && Monster.MonsterHP > 0)
             {
-                Console.WriteLine("1 - attack\n2 - defend\n3 - Limit break\n4 - Retreat");
+                Console.WriteLine("1 - attack\n" +
+                                  "2 - defend\n" +
+                                  "3 - Limit break\n" +
+                                  "4 - Inventory\n" +
+                                  "5 - Retreat\n");
 
                 string PlayerAction = Console.ReadLine();
 
@@ -37,6 +42,9 @@ namespace Game1
                         SuperAttack();
                         break;
                     case "4":
+                        Player.Inventory();
+                        break;
+                    case "5":
                         Retreat();
                         break;
                     default:
@@ -49,9 +57,19 @@ namespace Game1
 
         public static void Attack()
         {
-            Monster.MonsterHP -= Player.PlayerAttack;
+            if (PotionDamageBoostActive)
+            {
+                int damage = Player.PlayerAttack * Player.PotionDamageBoost;
+                Monster.MonsterHP -= Player.PlayerAttack * Player.PotionDamageBoost;
 
-            Console.WriteLine("\nYou deal " + Player.PlayerAttack + " points of damage to the monster.\n");
+                Console.WriteLine("\nYou deal " + damage + " points of damage to the monster.\n");
+                PotionDamageBoostActive = false;
+            } else
+            {
+                Monster.MonsterHP -= Player.PlayerAttack;
+
+                Console.WriteLine("\nYou deal " + Player.PlayerAttack + " points of damage to the monster.\n");
+            }
 
             if (Monster.MonsterHP <= 0 && Player.PlayerHealth > 0)
             {
@@ -88,7 +106,7 @@ namespace Game1
             if (ChanceToDefend % 2 == 1)
             {
 
-                if (Player.PlayerHealth < Player.PlayerHP + (Player.PlayerHP * Player.PlayerLVL * .5))
+                if (Player.PlayerHealth < Player.PlayerHP + (Player.PlayerHP * (Player.PlayerLVL - 1) / 2))
                 {
                     if (Player.PlayerHealth > 0)
                     {

@@ -21,7 +21,7 @@ namespace Game1
             Random randLVL = new Random();
             Random randATK = new Random();
 
-            monsterLVL = randLVL.Next( Math.Max(Player.PlayerLVL - 3, 1), Math.Min(Player.PlayerLVL + 3, 10));
+            monsterLVL = randLVL.Next( Math.Max(Player.PlayerLVL - 3, 1), Math.Min(Player.PlayerLVL + 2, 10));
 
             monsterFleeATKChance = randATK.Next(0, 4);
 
