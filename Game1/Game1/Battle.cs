@@ -8,6 +8,7 @@ namespace Game1
         public static void Start()
         {
             Monster.Create();
+            Player.PlayerStartHealth = Player.PlayerHealth;
 
             Console.WriteLine("You are level " + Player.PlayerLVL + ".\n");
             Console.WriteLine("You have " + Player.PlayerHealth + " HP.\n");
@@ -147,11 +148,11 @@ namespace Game1
 
                 if (limitChoice == "1")
                 {
-                    double regain = Player.PlayerHP + (Player.PlayerHP * Player.PlayerLVL * .25) / 1.5;
+                    int regain = Player.PlayerMaxHealth / 2;
 
-                    Player.PlayerHealth += Convert.ToInt32(regain);
+                    Player.PlayerHealth += regain;
 
-                    Console.WriteLine("You regain " + Convert.ToInt32(regain) + " HP.");
+                    Console.WriteLine("You regain " + regain + " HP.");
                 }
                 else if (limitChoice == "2")
                 {

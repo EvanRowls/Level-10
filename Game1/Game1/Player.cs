@@ -12,9 +12,9 @@ namespace Game1
         public static int HealingPotions = 0;
         public static int AttackPotions = 0;
 
-
-        public static double PlayerMaxHealth = PlayerHP + (PlayerHP * (PlayerLVL - 1) * .25);
-        public static double PlayerHealth = PlayerHP;
+        public static int PlayerStartHealth, PlayerEndHealth;
+        public static int PlayerMaxHealth = PlayerHP + (PlayerHP * (PlayerLVL - 1) / 4);
+        public static int PlayerHealth = PlayerHP;
 
         public static string PlayerName = "default";
 

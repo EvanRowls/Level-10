@@ -62,17 +62,34 @@ namespace Game1
 
         public static void Retreat() 
         {
+            Player.PlayerEndHealth = Player.PlayerHealth;
             if (Monster.monsterFleeATKChance == 0)
             {
-                Console.WriteLine("You manage to escape without further injury");
-                End();
+                if (Player.PlayerEndHealth == Player.PlayerStartHealth)
+                {
+                    Console.WriteLine("You escape succesfully.");
+                    End();
+                }
+                else
+                {
+                    Console.WriteLine("You manage to escape without further injury");
+                    End();
+                }
             }
             else
             {
                 int FleeDamage = (Monster.MonsterAttack * Monster.monsterFleeATKChance)/10;
-                Console.WriteLine("As you flee, the monster gets in one more attack, dealing " + FleeDamage + " points of damage.");
-                Player.PlayerHealth -= FleeDamage;
-                End();
+                if (FleeDamage == 0)
+                {
+                    Console.WriteLine("You escape succesfully.");
+                    End();
+                }
+                else
+                {
+                    Console.WriteLine("As you flee, the monster gets in one more attack, dealing " + FleeDamage + " points of damage.");
+                    Player.PlayerHealth -= FleeDamage;
+                    End();
+                }
             }
         }
     }

@@ -47,6 +47,8 @@ namespace Game1
             {
                 Player.PlayerLVL = 10;
             }
+
+            Player.PlayerMaxHealth = Player.PlayerHP + (Player.PlayerHP * (Player.PlayerLVL - 1) / 4);
         }
 
     }

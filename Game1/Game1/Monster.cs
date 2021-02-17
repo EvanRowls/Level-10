@@ -23,7 +23,7 @@ namespace Game1
 
             monsterLVL = randLVL.Next( Math.Max(Player.PlayerLVL - 3, 1), Math.Min(Player.PlayerLVL + 3, 10));
 
-            monsterFleeATKChance = randATK.Next(0, 5);
+            monsterFleeATKChance = randATK.Next(0, 4);
 
             MonsterAttack = EnemyAV * monsterLVL;
 

@@ -4,3 +4,10 @@ C:\Users\Kalanaed\Desktop\VS\Game1\Game1\bin\Debug\Game1.pdb
 C:\Users\Kalanaed\Desktop\VS\Game1\Game1\obj\Debug\Game1.csprojResolveAssemblyReference.cache
 C:\Users\Kalanaed\Desktop\VS\Game1\Game1\obj\Debug\Game1.exe
 C:\Users\Kalanaed\Desktop\VS\Game1\Game1\obj\Debug\Game1.pdb
+C:\Users\VR\Documents\GitHub\Level-10\Game1\Game1\bin\Debug\Game1.exe.config
+C:\Users\VR\Documents\GitHub\Level-10\Game1\Game1\bin\Debug\Game1.exe
+C:\Users\VR\Documents\GitHub\Level-10\Game1\Game1\bin\Debug\Game1.pdb
+C:\Users\VR\Documents\GitHub\Level-10\Game1\Game1\obj\Debug\Game1.csprojAssemblyReference.cache
+C:\Users\VR\Documents\GitHub\Level-10\Game1\Game1\obj\Debug\Game1.csproj.CoreCompileInputs.cache
+C:\Users\VR\Documents\GitHub\Level-10\Game1\Game1\obj\Debug\Game1.exe
+C:\Users\VR\Documents\GitHub\Level-10\Game1\Game1\obj\Debug\Game1.pdb
