@@ -64,7 +64,7 @@ namespace Game1
         public static void PostBattle()
         {
             Random rnd = new Random();
-
+            //can spam inventory to get shop
             if (rnd.Next(2) == 1)
             {
                 Console.WriteLine("You come across a shop.\n" +
