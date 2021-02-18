@@ -22,6 +22,8 @@ namespace Game1
 
                 Loot();
 
+                Butcher();
+
                 PostBattle();
 
                 Level.Check();
@@ -54,8 +56,8 @@ namespace Game1
             }
             else 
             {
-                PostBattle();
                 Console.Clear();
+                Console.WriteLine("Something very strange has happened.");
                 Battle.Start();
             }
             
@@ -63,14 +65,16 @@ namespace Game1
 
         public static void PostBattle()
         {
+
             Random rnd = new Random();
+            int chance = rnd.Next(2);
             //can spam inventory to get shop
-            if (rnd.Next(2) == 1)
+            if (chance == 1)
             {
-                Console.WriteLine("You come across a shop.\n" +
-                                  "S - enter shop\n" +
-                                  "I - open your inventory.\n" +
-                                  "Enter - Continue on\n");
+                Console.WriteLine("You come across a shop.\n\n" +
+                                  "S - Enter shop\n" +
+                                  "I - Open your inventory.\n" +
+                                  "Enter - Continue on");
                 string choice = Console.ReadLine();
                 choice = choice.ToUpper();
 
@@ -89,8 +93,9 @@ namespace Game1
             }
             else
             {
-                Console.WriteLine("Press Enter to Continue on or I to open your inventory.\n");
+                Console.WriteLine("I - Open your inventory\nEnter - Continue on");
                 string choice = Console.ReadLine();
+                Console.WriteLine("");
                 choice = choice.ToUpper();
 
                 switch (choice)
@@ -109,6 +114,14 @@ namespace Game1
         {
             Random rnd = new Random();
             int chance = rnd.Next(2);
+
+            Random rndGold = new Random();
+            int GoldMax = Monster.monsterLVL * 30;
+            int GoldLoot = rndGold.Next(15,GoldMax);
+
+            Player.Gold += GoldLoot;
+            Console.WriteLine(GoldLoot + " Gold");
+
             if (chance == 1) //did you find any items
             {
                 switch (rnd.Next(4))  //What did you find
@@ -138,6 +151,30 @@ namespace Game1
                         Console.WriteLine("If you're seeing this message, something very strange has happened.");
                         break;
                 }
+            }
+        }
+        public static void Butcher()
+        {
+            Console.WriteLine("Try to harvest some meat from the monster? y/n");
+            string butcher = Console.ReadLine();
+            butcher = butcher.ToUpper();
+            switch (butcher)
+            {
+                case "Y":
+                    int MaxMeat = Monster.monsterLVL * 2;
+                    Random rndMeat = new Random();
+                    int Meat = rndMeat.Next(MaxMeat);
+                    Player.MonsterMeat += Meat;
+                    if (Meat > 0)
+                    { Console.WriteLine("You manage to cut " + Meat + " pieces of edible meat from the dead monster.\n"); }
+                    else 
+                    { Console.WriteLine("You fail to salvage any edible meat.\n"); }
+                    break;
+                case "N":
+                    break;
+                default:
+                    Butcher();
+                    break;
             }
         }
     }

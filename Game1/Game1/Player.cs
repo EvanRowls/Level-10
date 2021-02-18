@@ -17,6 +17,7 @@ namespace Game1
         public static int HealingPotions = 1;
         public static int SingleAttackPotions = 3;
         public static int MultiAttackPotions = 1;
+        public static int MonsterMeat = 0;
 
         public static int HealingPotionDuration;
         public static bool HealingPotionActive = false;
@@ -65,6 +66,14 @@ namespace Game1
                     Inventory();
                     break;
                 case "2":
+                    if (MonsterMeat == 0)
+                    {
+                        Console.WriteLine("Nothing Here");
+                    }
+                    else
+                    {
+                        Food();
+                    }
                     Inventory();
                     break;
                 case "3":
@@ -143,6 +152,27 @@ namespace Game1
                     break;
                 default:
                     Console.WriteLine("Not recognized\n");
+                    break;
+            }
+        }
+        public static void Food()
+        {
+            Console.WriteLine("You have " + MonsterMeat + " pieces of meat." +
+                              "\n1 - Eat a piece of meat" +
+                              "\n2 - Go back");
+            string choice = Console.ReadLine();
+            switch (choice.ToUpper())
+            {
+                case "1":
+                    Console.WriteLine("You eat a piece of meat.\nYour regain five points of health");
+                    MonsterMeat -= 1;
+                    PlayerHealth += 5;
+                    break;
+                case "2":
+                    break;
+                default:
+                    Console.WriteLine("Please choose a valid option.");
+                    Food();
                     break;
             }
         }

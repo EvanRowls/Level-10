@@ -23,10 +23,9 @@ namespace Game1
                                   "2 - defend\n" +
                                   "3 - Limit break\n" +
                                   "4 - Inventory\n" +
-                                  "5 - Retreat\n");
+                                  "5 - Retreat");
 
                 string PlayerAction = Console.ReadLine();
-                Console.WriteLine("\n");
 
                 switch (PlayerAction)
                 {

@@ -8,6 +8,7 @@ namespace Game1
         public static int InstantHealthPotionSellPrice = 20;
         public static int AttackPotionSellPrice = 15;
         public static int MultiAttackPotionSellPrice = 20;
+        public static int MeatSellPrice = 5;
 
         public static int HealingPotionBuyPrice = 20;
         public static int InstantHealthPotionBuyPrice = 30;
@@ -53,6 +54,8 @@ namespace Game1
                     {
                         Player.Gold -= InstantHealthPotionBuyPrice;
                         Player.InstantHealthPotions += 1;
+                        Console.WriteLine("You purchase an instant health potion\n" +
+                                          "You now have " + Player.InstantHealthPotions + " instant health potions\n");
                     } else { Console.WriteLine("Not enough Gold"); }
                     break;
                 case "2":
@@ -60,6 +63,8 @@ namespace Game1
                     {
                         Player.Gold -= HealingPotionBuyPrice;
                         Player.HealingPotions += 1;
+                        Console.WriteLine("You purchase a healing potion\n" +
+                                          "You now have " + Player.HealingPotions + " healing potions\n");
                     } else { Console.WriteLine("Not enough Gold"); }
                     break;
                 case "3":
@@ -67,6 +72,8 @@ namespace Game1
                     {
                         Player.Gold -= AttackPotionBuyPrice;
                         Player.SingleAttackPotions += 1;
+                        Console.WriteLine("You purchase an attack potion\n" +
+                                          "You now have " + Player.SingleAttackPotions + " attack potions\n");
                     } else { Console.WriteLine("Not enough Gold"); }
                     break;
                 case "4":
@@ -74,6 +81,8 @@ namespace Game1
                     {
                         Player.Gold -= MultiAttackPotionBuyPrice;
                         Player.MultiAttackPotions += 1;
+                        Console.WriteLine("You purchase a strength potion\n" +
+                                          "You now have " + Player.MultiAttackPotions + " strength potions\n");
                     } else { Console.WriteLine("Not enough Gold"); }
                     break;
                 case "5":
@@ -82,6 +91,7 @@ namespace Game1
                     Console.WriteLine();
                     break;
             }
+            Open();
         }
 
         public static void Sell()
@@ -90,7 +100,8 @@ namespace Game1
                               "\n2 - Healing(" + HealingPotionSellPrice + " Gold)" +
                               "\n3 - Attack(" + AttackPotionSellPrice + " Gold)" +
                               "\n4 - Strength(" + MultiAttackPotionSellPrice + " Gold)" +
-                              "\n\n5 - Go back");
+                              "\n5 - Monser meat(" + MeatSellPrice + " Gold)" +
+                              "\n\n6 - Go back");
             string choice = Console.ReadLine();
             switch (choice)
             {
@@ -99,6 +110,8 @@ namespace Game1
                     {
                         Player.Gold += InstantHealthPotionSellPrice;
                         Player.InstantHealthPotions -= 1;
+                        Console.WriteLine("You sell an instant health potion\n" +
+                                          "You now have " + Player.InstantHealthPotions + " instant health potions\n");
                     }
                     else { Console.WriteLine("No instant health potions to sell"); }
                     break;
@@ -107,6 +120,8 @@ namespace Game1
                     {
                         Player.Gold += HealingPotionSellPrice;
                         Player.HealingPotions -= 1;
+                        Console.WriteLine("You sell a healing potion\n" +
+                                          "You now have " + Player.HealingPotions + " healing potions\n");
                     }
                     else { Console.WriteLine("No healing potions to sell"); }
                     break;
@@ -115,6 +130,8 @@ namespace Game1
                     {
                         Player.Gold += AttackPotionSellPrice;
                         Player.SingleAttackPotions -= 1;
+                        Console.WriteLine("You sell an attack potion\n" +
+                                          "You now have " + Player.SingleAttackPotions + " attack potions\n");
                     }
                     else { Console.WriteLine("No Attack potions available to sell"); }
                     break;
@@ -123,15 +140,28 @@ namespace Game1
                     {
                         Player.Gold += MultiAttackPotionSellPrice;
                         Player.MultiAttackPotions -= 1;
+                        Console.WriteLine("You sell a strength potion\n" +
+                                          "You now have " + Player.MultiAttackPotions + " strength potions\n");
                     }
                     else { Console.WriteLine("No strength potions available to sell"); }
                     break;
                 case "5":
+                    if (Player.MonsterMeat > 0)
+                    {
+                        Player.Gold += MeatSellPrice;
+                        Player.MonsterMeat -= 1;
+                        Console.WriteLine("You sell a piece of monester meat\n" +
+                                          "You now have " + Player.MonsterMeat + " pieces of meat\n");
+                    }
+                    else { Console.WriteLine("No meat available to sell"); }
+                    break;
+                case "6":
                     break;
                 default:
                     Console.WriteLine();
                     break;
             }
+            Open();
         }
     }
 }
