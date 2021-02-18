@@ -42,13 +42,14 @@ namespace Game1
 
         public static void Inventory() 
         {
+            Console.Clear();
             TotalPotions = InstantHealthPotions + SingleAttackPotions + HealingPotions + MultiAttackPotions;
             Console.WriteLine(PlayerName + "'s Inventory\n" + 
                               "-------------\n" + 
                               "1 - Potions\n" +
                               "2 - Food\n" +
                               "3 - Items\n" +
-                              "C to continue\n");
+                              "C - continue\n");
             string choice = Console.ReadLine();
             choice = choice.ToUpper();
 
@@ -58,6 +59,7 @@ namespace Game1
                     if (TotalPotions == 0)
                     {
                         Console.WriteLine("Nothing Here");
+                        Console.ReadKey();
                     }
                     else
                     {
@@ -69,6 +71,7 @@ namespace Game1
                     if (MonsterMeat == 0)
                     {
                         Console.WriteLine("Nothing Here");
+                        Console.ReadKey();
                     }
                     else
                     {
@@ -83,6 +86,7 @@ namespace Game1
                     break;
                 default:
                     Console.WriteLine("Invalid choice");
+                    Console.ReadKey();
                     Inventory();
                     break;
             }
@@ -93,7 +97,8 @@ namespace Game1
             Console.WriteLine("1 - Instant Health (" + InstantHealthPotions + ")\n" +
                               "2 - Healing (" + HealingPotions + ")\n" +
                               "3 - Attack (" + SingleAttackPotions + ")\n" +
-                              "4 - Strength (" + MultiAttackPotions + ")\n");
+                              "4 - Strength (" + MultiAttackPotions + ")\n" +
+                              "5 - Go back");
 
             string choice = Console.ReadLine();
 
@@ -103,6 +108,7 @@ namespace Game1
                     if (InstantHealthPotions == 0)
                     {
                         Console.WriteLine("You have no health potions\n");
+                        Console.ReadKey();
                     }
                     else
                     {
@@ -110,12 +116,14 @@ namespace Game1
                         PlayerHealth += 100;
                         PlayerHealth = Math.Min(PlayerHealth, PlayerMaxHealth);
                         Console.WriteLine("You drink a health potion.\nHealth increased to " + PlayerHealth + "\n");
+                        Console.ReadKey();
                     }
                     break;
                 case "2":
                     if (HealingPotions == 0)
                     {
                         Console.WriteLine("You have no health potions\n");
+                        Console.ReadKey();
                     }
                     else
                     {
@@ -123,24 +131,28 @@ namespace Game1
                         HealingPotionDuration = 3;
                         HealingPotionActive = true;
                         Console.WriteLine("You drink a healing potion.\nHealth will be restored over the next three turns\n");
+                        Console.ReadKey();
                     }
                     break;
                 case "3":
                     if (SingleAttackPotions == 0)
                     {
                         Console.WriteLine("You have no attack boost potions\n");
+                        Console.ReadKey();
                     }
                     else
                     {
                         SingleAttackPotions -= 1;
                         AttackPotionDamageBoostActive = true;
                         Console.WriteLine("You take an attack boost potion.\nYour next attack will deal more damage\n");
+                        Console.ReadKey();
                     }
                     break;
                 case "4":
                     if (MultiAttackPotions == 0)
                     {
                         Console.WriteLine("You have no strength potions\n");
+                        Console.ReadKey();
                     }
                     else
                     {
@@ -148,10 +160,14 @@ namespace Game1
                         MultiAttackPotionDuration = 3;
                         MultiAttackPotionActive = true;
                         Console.WriteLine("You take a strength potion.\nYour next three attacks will deal slightly more damage\n");
+                        Console.ReadKey();
                     }
+                    break;
+                case "5":
                     break;
                 default:
                     Console.WriteLine("Not recognized\n");
+                    Console.ReadKey();
                     break;
             }
         }
@@ -175,6 +191,7 @@ namespace Game1
                     Food();
                     break;
             }
+            Console.ReadKey();
         }
     }
 }

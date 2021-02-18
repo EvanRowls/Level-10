@@ -56,7 +56,6 @@ namespace Game1
             }
             else 
             {
-                Console.ReadLine();
                 PostBattle();
                 Console.Clear();
                 Battle.Start();
@@ -121,7 +120,6 @@ namespace Game1
                 }
             }
         }
-        
         public static void Loot()
         {
             Random rnd = new Random();
@@ -188,6 +186,7 @@ namespace Game1
                     Butcher();
                     break;
             }
+            Console.ReadKey();
         }
     }
 }

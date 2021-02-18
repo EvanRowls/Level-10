@@ -30,28 +30,29 @@ namespace Game1
                 {
                     case "1":
                         Attack();
+                        PotionEffects();
                         break;
                     case "2":
                         Defend();
+                        PotionEffects();
                         break;
                     case "3":
                         SuperAttack();
+                        PotionEffects();
                         break;
                     case "4":
                         Player.Inventory();
                         break;
                     case "5":
                         Retreat();
+                        PotionEffects();
                         break;
                     default:
                         Console.WriteLine("Please choose an action.\n");
                         break;
                 }
-                Console.WriteLine("You go here");
-                PotionEffects();
-
             }
-            
+
         }
 
         public static void Attack()
@@ -242,6 +243,7 @@ namespace Game1
             if (Player.HealingPotionActive)
             {
                 Player.PlayerHealth += 20;
+                Player.PlayerHealth = Math.Min(Player.PlayerHealth, Player.PlayerMaxHealth);
                 Console.WriteLine("The effects of the healing poiton raise your health to " + Player.PlayerHealth);
                 Player.HealingPotionDuration -= 1;
                 if (Player.HealingPotionDuration <= 0)
