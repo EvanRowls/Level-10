@@ -10,9 +10,9 @@ namespace Game1
         public static Random randLVL = new Random();
         public static Random randATK = new Random();
 
-        public static int monsterLVL = randLVL.Next(Player.PlayerLVL, Player.PlayerLVL + 3);
-        public static int MonsterAttack = EnemyAV * monsterLVL;
-        public static int MonsterHP = monsterLVL * EnemyHP;
+        public static int monsterLVL;
+        public static int MonsterAttack;
+        public static int MonsterHP;
         public static int monsterFleeATKChance = 0;
 
 
@@ -21,13 +21,13 @@ namespace Game1
             Random randLVL = new Random();
             Random randATK = new Random();
 
-            monsterLVL = randLVL.Next( Math.Max(Player.PlayerLVL - 3, 1), Math.Min(Player.PlayerLVL + 2, 10));
+            monsterLVL = randLVL.Next( 1, Math.Min(Player.PlayerLVL + 2, 10));
 
             monsterFleeATKChance = randATK.Next(0, 4);
 
             MonsterAttack = EnemyAV * monsterLVL;
 
-            MonsterHP = monsterLVL * EnemyHP;
+            MonsterHP = (monsterLVL * 5) + EnemyHP;
         }
 	}
 }

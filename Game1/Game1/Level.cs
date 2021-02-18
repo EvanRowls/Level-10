@@ -49,6 +49,7 @@ namespace Game1
             }
 
             Player.PlayerMaxHealth = Player.PlayerHP + (Player.PlayerHP * (Player.PlayerLVL - 1) / 4);
+            Player.PlayerAttack = Player.PlayerLVL * Player.PlayerAV;
         }
 
     }

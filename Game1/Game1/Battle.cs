@@ -57,8 +57,6 @@ namespace Game1
 
         public static void Attack()
         {
-            Player.PlayerAttack = Player.PlayerAttack * Player.PlayerLVL;
-
             if (Player.AttackPotionDamageBoostActive)
             {
                 int damage = Player.PlayerAttack * Player.AttackPotionDamageBoost;

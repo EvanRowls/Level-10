@@ -10,6 +10,7 @@ namespace Game1
     {
         public static void Main(string[] args)
         {
+            Shop.Open();
             Player.Create();
 
             Console.WriteLine();

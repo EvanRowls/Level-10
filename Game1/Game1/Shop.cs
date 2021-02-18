@@ -14,6 +14,8 @@ namespace Game1
         public static int InstantHealthPotionBuyPrice = 30;
         public static int AttackPotionBuyPrice = 20;
         public static int MultiAttackPotionBuyPrice = 30;
+
+        public static int Num2sell;
         public static void Open()
         {
             Console.WriteLine("Gold available: " + Player.Gold + "\n");
@@ -23,12 +25,15 @@ namespace Game1
             switch (choice)
             {
                 case "1":
+                    Console.Clear();
                     Buy();
                     break;
                 case "2":
+                    Console.Clear();
                     Sell();
                     break;
                 case "3":
+                    Console.Clear();
                     break;
                 default:
                     Console.WriteLine("Please select an action");
@@ -39,13 +44,18 @@ namespace Game1
 
         public static void Buy()
         {
+            Console.Clear();
             //Console.WriteLine("1 - Potions\n2 - Weapons\n3 - Food\n");
 
-            Console.WriteLine("1 - Instant Health(" + InstantHealthPotionBuyPrice + " Gold)" +
-                              "\n2 - Healing(" + HealingPotionBuyPrice + " Gold)" +
-                              "\n3 - Attack(" + AttackPotionBuyPrice + " Gold)" +
-                              "\n4 - Strength(" + MultiAttackPotionBuyPrice + " Gold)" +
-                              "\n\n5 - Go back");
+            Console.WriteLine("        Item         Price      In Inventory" +
+                              "\n---------------------------------------------" +
+                              //     Instant Health (xx Gold)    -    X
+                              "\n1 - Instant Health (" + InstantHealthPotionBuyPrice + " Gold)" + "         " + Player.InstantHealthPotions +
+                              "\n2 - Healing        (" + HealingPotionBuyPrice + " Gold)" + "         " + Player.HealingPotions +
+                              "\n3 - Attack         (" + AttackPotionBuyPrice + " Gold)" + "         " + Player.SingleAttackPotions +
+                              "\n4 - Strength       (" + MultiAttackPotionBuyPrice + " Gold)" + "         " + Player.MultiAttackPotions +
+                              "\n\n5 - Sell" +
+                              "\n6 - Go back");
             string choice = Console.ReadLine();
             switch (choice)
             {
@@ -86,32 +96,71 @@ namespace Game1
                     } else { Console.WriteLine("Not enough Gold"); }
                     break;
                 case "5":
+                    Sell();
+                    break;
+                case "6":
                     break;
                 default:
                     Console.WriteLine();
                     break;
             }
+            Console.WriteLine("\n\n\nPress any key to continue.");
+            Console.ReadKey();
+            Console.Clear();
             Open();
         }
 
         public static void Sell()
         {
-            Console.WriteLine("1 - Instant Health(" + InstantHealthPotionSellPrice + " Gold)" +
-                              "\n2 - Healing(" + HealingPotionSellPrice + " Gold)" +
-                              "\n3 - Attack(" + AttackPotionSellPrice + " Gold)" +
-                              "\n4 - Strength(" + MultiAttackPotionSellPrice + " Gold)" +
-                              "\n5 - Monser meat(" + MeatSellPrice + " Gold)" +
-                              "\n\n6 - Go back");
+            Console.Clear();
+            Console.WriteLine("        Item       Sell Price   In Inventory" +
+                              "\n---------------------------------------------" +
+                              //     Instant Health (xx Gold)    -    X
+                              "\n1 - Instant Health (" + InstantHealthPotionSellPrice + " Gold)" + "         "  + Player.InstantHealthPotions +
+                              "\n2 - Healing        (" + HealingPotionSellPrice + " Gold)" + "         " + Player.HealingPotions +
+                              "\n3 - Attack         (" + AttackPotionSellPrice + " Gold)" + "         " + Player.SingleAttackPotions +
+                              "\n4 - Strength       (" + MultiAttackPotionSellPrice + " Gold)" + "         " + Player.MultiAttackPotions +
+                              "\n5 - Monser meat    (0" + MeatSellPrice + " Gold)" + "         " + Player.MonsterMeat +
+                              "\n\n6 - Buy" +
+                              "\n7 - Go back");
             string choice = Console.ReadLine();
+            bool notInt = true;
+
             switch (choice)
             {
                 case "1":
                     if (Player.InstantHealthPotions > 0)
                     {
-                        Player.Gold += InstantHealthPotionSellPrice;
-                        Player.InstantHealthPotions -= 1;
-                        Console.WriteLine("You sell an instant health potion\n" +
-                                          "You now have " + Player.InstantHealthPotions + " instant health potions\n");
+                        while (notInt)
+                        {
+
+                            Console.WriteLine("How many would you like to sell?");
+                            string input = Console.ReadLine();
+                            if (int.TryParse(input, out Num2sell))
+                            {
+                                notInt = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter a whole number.");
+                            }
+                        }
+                        if (Num2sell <= Player.InstantHealthPotions && Num2sell > 0)
+                        {
+                            Player.Gold += InstantHealthPotionSellPrice * Num2sell;
+                            Player.InstantHealthPotions -= Num2sell;
+                            Console.WriteLine("You sell an instant health potion\n" +
+                                              "You now have " + Player.InstantHealthPotions + " instant health potions\n");
+                            Console.WriteLine("\n\n\nPress any key to continue.");
+                            Console.ReadKey();
+                            Sell();
+                        } else
+                        {
+                            Console.WriteLine("You don't have that many to sell.");
+                            Console.WriteLine("\n\n\nPress any key to continue.");
+                            Console.ReadKey();
+                            Sell();
+                        }
                     }
                     else { Console.WriteLine("No instant health potions to sell"); }
                     break;
@@ -156,11 +205,17 @@ namespace Game1
                     else { Console.WriteLine("No meat available to sell"); }
                     break;
                 case "6":
+                    Buy();
+                    break;
+                case "7":
                     break;
                 default:
                     Console.WriteLine();
                     break;
             }
+            Console.WriteLine("\n\n\nPress any key to continue.");
+            Console.ReadKey();
+            Console.Clear();
             Open();
         }
     }

@@ -5,7 +5,7 @@ namespace Game1
 	class Player
 	{
         //Initial player values
-        public static int PlayerEXP = 0, PlayerLVL = 1;
+        public static int PlayerEXP =0, PlayerLVL = 1;
         public static int PlayerHP = 100, PlayerAV = 10;
         public static int LimitBreak = 0;
         public static string PlayerName = "default";
@@ -38,6 +38,7 @@ namespace Game1
             Console.Write("Please enter your name: ");
 
             PlayerName = Console.ReadLine();//player name
+
         }
 
         public static void Inventory() 
