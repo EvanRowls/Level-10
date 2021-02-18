@@ -16,7 +16,6 @@ namespace Game1
             Console.WriteLine("You have encoutered a Level " + Monster.monsterLVL + " monster.\n");
 
             //Battle
-
             while (Player.PlayerHealth > 0 && Monster.MonsterHP > 0)
             {
                 Console.WriteLine("1 - attack\n" +
@@ -218,7 +217,7 @@ namespace Game1
                 else
                 {
                     Console.WriteLine("You manage to escape without further injury.\n");
-                    Aftermath.End();
+                    Aftermath.End(); 
                 }
             }
             else

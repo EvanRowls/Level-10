@@ -45,8 +45,8 @@ namespace Game1
                 }
                 else
                 {
+                    PostBattle();
                     Console.Clear();
-
                     Battle.Start();
                 }
             }
@@ -56,8 +56,9 @@ namespace Game1
             }
             else 
             {
+                Console.ReadLine();
+                PostBattle();
                 Console.Clear();
-                Console.WriteLine("Something very strange has happened.");
                 Battle.Start();
             }
             
@@ -65,47 +66,58 @@ namespace Game1
 
         public static void PostBattle()
         {
-
+            Console.Clear();
             Random rnd = new Random();
-            int chance = rnd.Next(2);
-            //can spam inventory to get shop
-            if (chance == 1)
-            {
-                Console.WriteLine("You come across a shop.\n\n" +
-                                  "S - Enter shop\n" +
-                                  "I - Open your inventory.\n" +
-                                  "Enter - Continue on");
-                string choice = Console.ReadLine();
-                choice = choice.ToUpper();
+            int chance = rnd.Next(3);
+            Console.WriteLine("");
+            bool first = true;
 
-                switch (choice)
+            while (first) 
+            {
+                if (chance == 1)
                 {
-                    case "S":
-                        Shop.Open();
-                        break;
-                    case "I":
-                        Player.Inventory();
-                        PostBattle();
-                        break;
-                    default:
-                        break;
+                    Console.WriteLine("You come across a shop.\n\n" +
+                                      "S - Enter shop\n" +
+                                      "I - Open your inventory.\n" +
+                                      "Enter - Continue on");
+                    string choice = Console.ReadLine();
+                    choice = choice.ToUpper();
+
+                    switch (choice)
+                    {
+                        case "S":
+                            Shop.Open();
+                            break;
+                        case "I":
+                            Player.Inventory();
+                            break;
+                        case "":
+                            first = false;
+                            break;
+                        default:
+                            Console.WriteLine("Please enter a valid option.");
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                Console.WriteLine("I - Open your inventory\nEnter - Continue on");
-                string choice = Console.ReadLine();
-                Console.WriteLine("");
-                choice = choice.ToUpper();
-
-                switch (choice)
+                else
                 {
-                    case "I":
-                        Player.Inventory();
-                        PostBattle();
-                        break;
-                    default:
-                        break;
+                    Console.WriteLine("I - Open your inventory\nEnter - Continue on");
+                    string choice = Console.ReadLine();
+                    Console.WriteLine(chance);
+                    choice = choice.ToUpper();
+                    switch (choice)
+                    {
+                        case "I":
+                            Player.Inventory();
+                            break;
+                        case "":
+                            first = false;
+                            break;
+                        default:
+                            Console.WriteLine("Please enter a valid option.");
+                            Console.ReadLine();
+                            break;
+                    }
                 }
             }
         }
