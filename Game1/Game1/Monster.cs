@@ -11,7 +11,7 @@ namespace Game1
         public static int MonsterHP;
         public static int monsterFleeATKChance = 0;
 
-        public Monster()
+        public static void Create()
         {
             Random randLVL = new Random();
             Random randATK = new Random();
