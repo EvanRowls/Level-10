@@ -62,7 +62,6 @@ namespace Game1
             }
 
         }
-
         public static void PostBattle()
         {
             Console.Clear();

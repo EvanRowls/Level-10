@@ -6,7 +6,7 @@ namespace Game1
     {
         public static void Start()
         {
-            Monster Monster = new Monster();
+            Monster Monster1 = new Monster();
             Player.PlayerStartHealth = Player.PlayerHealth;
 
             Console.WriteLine("You are level " + Player.PlayerLVL + ".\n");
