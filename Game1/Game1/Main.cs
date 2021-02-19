@@ -4,7 +4,7 @@ namespace Game1
 {
     class MainClass
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             //Shop.Open();
             Player.Create();
