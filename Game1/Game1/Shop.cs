@@ -15,7 +15,8 @@ namespace Game1
         public static int AttackPotionBuyPrice = 20;
         public static int MultiAttackPotionBuyPrice = 30;
 
-        public static int Num2sell;
+        public static int Num2sell, Num2buy;
+
         public static void Open()
         {
             Console.WriteLine("Gold available: " + Player.Gold + "\n");
@@ -54,46 +55,27 @@ namespace Game1
                               "\n2 - Healing        (" + HealingPotionBuyPrice + " Gold)" + "         " + Player.HealingPotions +
                               "\n3 - Attack         (" + AttackPotionBuyPrice + " Gold)" + "         " + Player.SingleAttackPotions +
                               "\n4 - Strength       (" + MultiAttackPotionBuyPrice + " Gold)" + "         " + Player.MultiAttackPotions +
+                              "\n                                       Gold: " + Player.Gold +
                               "\n\n5 - Sell" +
-                              "\n6 - Go back");
+                              "\n6 - Go back\n");
             string choice = Console.ReadLine();
             switch (choice)
             {
                 case "1":
-                    if (Player.Gold >= InstantHealthPotionBuyPrice)
-                    {
-                        Player.Gold -= InstantHealthPotionBuyPrice;
-                        Player.InstantHealthPotions += 1;
-                        Console.WriteLine("You purchase an instant health potion\n" +
-                                          "You now have " + Player.InstantHealthPotions + " instant health potions\n");
-                    } else { Console.WriteLine("Not enough Gold"); }
+                    Player.InstantHealthPotions = TransactionBuy(Player.InstantHealthPotions, InstantHealthPotionBuyPrice, " instant health potion");
+                    Buy();
                     break;
                 case "2":
-                    if (Player.Gold >= HealingPotionBuyPrice)
-                    {
-                        Player.Gold -= HealingPotionBuyPrice;
-                        Player.HealingPotions += 1;
-                        Console.WriteLine("You purchase a healing potion\n" +
-                                          "You now have " + Player.HealingPotions + " healing potions\n");
-                    } else { Console.WriteLine("Not enough Gold"); }
+                    Player.HealingPotions = TransactionBuy(Player.HealingPotions, HealingPotionBuyPrice, " healing potion");
+                    Buy();
                     break;
                 case "3":
-                    if (Player.Gold >= AttackPotionBuyPrice)
-                    {
-                        Player.Gold -= AttackPotionBuyPrice;
-                        Player.SingleAttackPotions += 1;
-                        Console.WriteLine("You purchase an attack potion\n" +
-                                          "You now have " + Player.SingleAttackPotions + " attack potions\n");
-                    } else { Console.WriteLine("Not enough Gold"); }
+                    Player.SingleAttackPotions = TransactionBuy(Player.SingleAttackPotions, AttackPotionBuyPrice, " attack potion");
+                    Buy();
                     break;
                 case "4":
-                    if (Player.Gold >= MultiAttackPotionBuyPrice)
-                    {
-                        Player.Gold -= MultiAttackPotionBuyPrice;
-                        Player.MultiAttackPotions += 1;
-                        Console.WriteLine("You purchase a strength potion\n" +
-                                          "You now have " + Player.MultiAttackPotions + " strength potions\n");
-                    } else { Console.WriteLine("Not enough Gold"); }
+                    Player.MultiAttackPotions = TransactionBuy(Player.MultiAttackPotions, MultiAttackPotionBuyPrice, " strength potion");
+                    Buy();
                     break;
                 case "5":
                     Sell();
@@ -116,93 +98,33 @@ namespace Game1
             Console.WriteLine("        Item       Sell Price   In Inventory" +
                               "\n---------------------------------------------" +
                               //     Instant Health (xx Gold)    -    X
-                              "\n1 - Instant Health (" + InstantHealthPotionSellPrice + " Gold)" + "         "  + Player.InstantHealthPotions +
+                              "\n1 - Instant Health (" + InstantHealthPotionSellPrice + " Gold)" + "         " + Player.InstantHealthPotions +
                               "\n2 - Healing        (" + HealingPotionSellPrice + " Gold)" + "         " + Player.HealingPotions +
                               "\n3 - Attack         (" + AttackPotionSellPrice + " Gold)" + "         " + Player.SingleAttackPotions +
                               "\n4 - Strength       (" + MultiAttackPotionSellPrice + " Gold)" + "         " + Player.MultiAttackPotions +
                               "\n5 - Monser meat    (0" + MeatSellPrice + " Gold)" + "         " + Player.MonsterMeat +
+                              "\n                                       Gold: " + Player.Gold +
                               "\n\n6 - Buy" +
                               "\n7 - Go back");
             string choice = Console.ReadLine();
-            bool notInt = true;
 
             switch (choice)
             {
                 case "1":
-                    if (Player.InstantHealthPotions > 0)
-                    {
-                        while (notInt)
-                        {
-
-                            Console.WriteLine("How many would you like to sell?");
-                            string input = Console.ReadLine();
-                            if (int.TryParse(input, out Num2sell))
-                            {
-                                notInt = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Please enter a whole number.");
-                            }
-                        }
-                        if (Num2sell <= Player.InstantHealthPotions && Num2sell > 0)
-                        {
-                            Player.Gold += InstantHealthPotionSellPrice * Num2sell;
-                            Player.InstantHealthPotions -= Num2sell;
-                            Console.WriteLine("You sell an instant health potion\n" +
-                                              "You now have " + Player.InstantHealthPotions + " instant health potions\n");
-                            Console.WriteLine("\n\n\nPress any key to continue.");
-                            Console.ReadKey();
-                            Sell();
-                        } else
-                        {
-                            Console.WriteLine("You don't have that many to sell.");
-                            Console.WriteLine("\n\n\nPress any key to continue.");
-                            Console.ReadKey();
-                            Sell();
-                        }
-                    }
-                    else { Console.WriteLine("No instant health potions to sell"); }
+                    Player.InstantHealthPotions = TransactionSale(Player.InstantHealthPotions, InstantHealthPotionSellPrice, " instant health potion");
+                    Sell();
                     break;
                 case "2":
-                    if (Player.HealingPotions > 0)
-                    {
-                        Player.Gold += HealingPotionSellPrice;
-                        Player.HealingPotions -= 1;
-                        Console.WriteLine("You sell a healing potion\n" +
-                                          "You now have " + Player.HealingPotions + " healing potions\n");
-                    }
-                    else { Console.WriteLine("No healing potions to sell"); }
+                    Player.HealingPotions = TransactionSale(Player.HealingPotions, HealingPotionSellPrice, " healing potion");
                     break;
                 case "3":
-                    if (Player.SingleAttackPotions > 0)
-                    {
-                        Player.Gold += AttackPotionSellPrice;
-                        Player.SingleAttackPotions -= 1;
-                        Console.WriteLine("You sell an attack potion\n" +
-                                          "You now have " + Player.SingleAttackPotions + " attack potions\n");
-                    }
-                    else { Console.WriteLine("No Attack potions available to sell"); }
+                    Player.SingleAttackPotions = TransactionSale(Player.SingleAttackPotions, AttackPotionSellPrice, " attack potion");
                     break;
                 case "4":
-                    if (Player.MultiAttackPotions > 0)
-                    {
-                        Player.Gold += MultiAttackPotionSellPrice;
-                        Player.MultiAttackPotions -= 1;
-                        Console.WriteLine("You sell a strength potion\n" +
-                                          "You now have " + Player.MultiAttackPotions + " strength potions\n");
-                    }
-                    else { Console.WriteLine("No strength potions available to sell"); }
+                    Player.MultiAttackPotions = TransactionSale(Player.MultiAttackPotions, MultiAttackPotionSellPrice, " strength potion");
                     break;
                 case "5":
-                    if (Player.MonsterMeat > 0)
-                    {
-                        Player.Gold += MeatSellPrice;
-                        Player.MonsterMeat -= 1;
-                        Console.WriteLine("You sell a piece of monester meat\n" +
-                                          "You now have " + Player.MonsterMeat + " pieces of meat\n");
-                    }
-                    else { Console.WriteLine("No meat available to sell"); }
+                    Player.MonsterMeat = TransactionSale(Player.MonsterMeat, MeatSellPrice, " monster meat");
                     break;
                 case "6":
                     Buy();
@@ -217,6 +139,98 @@ namespace Game1
             Console.ReadKey();
             Console.Clear();
             Open();
+        }
+
+        public static int TransactionSale(int item, int itemPrice, string itemType)
+        {
+            if (item > 0)
+            {
+
+                bool notInt = true;
+                while (notInt)
+                {
+                    Console.WriteLine("\nHow many would you like to sell?");
+                    string input = Console.ReadLine();
+                    if (int.TryParse(input, out Num2sell))
+                    {
+                        notInt = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a whole number.");
+                    }
+                }
+                if (Num2sell <= item && Num2sell > 1)
+                {
+                    Player.Gold += itemPrice * Num2sell;
+                    item -= Num2sell;
+                    Console.WriteLine("You sell " + Num2sell + itemType + "s\n" +
+                                      "You now have " + item + itemType + "s\n");
+                    Console.WriteLine("\n\nPress any key to continue.");
+                    Console.ReadKey();
+                }
+                else if (Num2sell == 1)
+                {
+                    Player.Gold += itemPrice;
+                    item -= 1;
+                    Console.WriteLine("You sell an" + itemType + "\n" +
+                                      "You now have " + item + itemType + "s\n");
+                    Console.WriteLine("\n\nPress any key to continue.");
+                    Console.ReadKey();
+                }
+                else if (Num2sell > item)
+                {
+                    Console.WriteLine("You don't have that many to sell.");
+                    Console.WriteLine("\n\nPress any key to continue.");
+                    Console.ReadKey();
+                }
+            }
+            else { Console.WriteLine("No " + itemType + "s to sell"); }
+
+            return item;
+        }
+
+        public static int TransactionBuy(int item, int itemPrice, string itemType)
+        {
+            bool notInt = true;
+            while (notInt)
+            {
+                Console.WriteLine("\nHow many would you like to buy?");
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out Num2buy))
+                {
+                    notInt = false;
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a whole number.");
+                }
+            }
+            if (Num2buy > 1)
+            {
+                Player.Gold -= itemPrice * Num2buy;
+                item += Num2buy;
+                Console.WriteLine("You buy " + Num2buy + itemType + "s\n" +
+                                  "You now have " + item + itemType + "s\n");
+                Console.WriteLine("\n\nPress any key to continue.");
+                Console.ReadKey();
+            }
+            else if (Num2buy == 1)
+            {
+                Player.Gold -= itemPrice;
+                item += 1;
+                Console.WriteLine("You buy an" + itemType + "\n" +
+                                  "You now have " + item + itemType + "s\n");
+                Console.WriteLine("\n\nPress any key to continue.");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("You buy nothing.");
+                Console.ReadKey();
+            }
+
+            return item;
         }
     }
 }

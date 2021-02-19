@@ -2,10 +2,10 @@
 
 namespace Game1
 {
-	class Player
-	{
+    class Player
+    {
         //Initial player values
-        public static int PlayerEXP =0, PlayerLVL = 1;
+        public static int PlayerEXP = 0, PlayerLVL = 1;
         public static int PlayerHP = 100, PlayerAV = 10;
         public static int LimitBreak = 0;
         public static string PlayerName = "default";
@@ -41,12 +41,12 @@ namespace Game1
 
         }
 
-        public static void Inventory() 
+        public static void Inventory()
         {
             Console.Clear();
             TotalPotions = InstantHealthPotions + SingleAttackPotions + HealingPotions + MultiAttackPotions;
-            Console.WriteLine(PlayerName + "'s Inventory\n" + 
-                              "-------------\n" + 
+            Console.WriteLine(PlayerName + "'s Inventory\n" +
+                              "-------------\n" +
                               "1 - Potions\n" +
                               "2 - Food\n" +
                               "3 - Items\n" +
@@ -196,4 +196,3 @@ namespace Game1
         }
     }
 }
-

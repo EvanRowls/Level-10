@@ -11,7 +11,7 @@ namespace Game1
             {
                 Random randEXP = new Random();
 
-                int ExpGain = randEXP.Next(Monster.monsterLVL * 50, Monster.monsterLVL * 101);
+                int ExpGain = randEXP.Next(Monster.monsterLVL * 50, Monster.monsterLVL * 75);
 
                 Player.PlayerEXP += ExpGain;
 
@@ -54,13 +54,13 @@ namespace Game1
             {
                 Console.WriteLine("Game Over\n");
             }
-            else 
+            else
             {
                 PostBattle();
                 Console.Clear();
                 Battle.Start();
             }
-            
+
         }
 
         public static void PostBattle()
@@ -71,7 +71,7 @@ namespace Game1
             Console.WriteLine("");
             bool first = true;
 
-            while (first) 
+            while (first)
             {
                 if (chance == 1)
                 {
@@ -127,7 +127,7 @@ namespace Game1
 
             Random rndGold = new Random();
             int GoldMax = Monster.monsterLVL * 30;
-            int GoldLoot = rndGold.Next(15,GoldMax);
+            int GoldLoot = rndGold.Next(15, GoldMax);
 
             Player.Gold += GoldLoot;
             Console.WriteLine(GoldLoot + " Gold");
@@ -177,7 +177,7 @@ namespace Game1
                     Player.MonsterMeat += Meat;
                     if (Meat > 0)
                     { Console.WriteLine("You manage to cut " + Meat + " pieces of edible meat from the dead monster.\n"); }
-                    else 
+                    else
                     { Console.WriteLine("You fail to salvage any edible meat.\n"); }
                     break;
                 case "N":

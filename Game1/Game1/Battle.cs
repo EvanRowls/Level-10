@@ -6,7 +6,7 @@ namespace Game1
     {
         public static void Start()
         {
-            Monster.Create();
+            Monster Monster = new Monster();
             Player.PlayerStartHealth = Player.PlayerHealth;
 
             Console.WriteLine("You are level " + Player.PlayerLVL + ".\n");
@@ -64,7 +64,8 @@ namespace Game1
 
                 Console.WriteLine("\nYou deal " + damage + " points of damage to the monster.\n");
                 Player.AttackPotionDamageBoostActive = false;
-            } else if (Player.MultiAttackPotionActive)
+            }
+            else if (Player.MultiAttackPotionActive)
             {
                 int damage = Player.PlayerAttack * Player.MultiAttackPotionBoost;
                 Monster.MonsterHP -= Player.PlayerAttack * Player.MultiAttackPotionBoost;
@@ -202,7 +203,7 @@ namespace Game1
             }
         }
 
-        public static void Retreat() 
+        public static void Retreat()
         {
             Console.WriteLine("You attempt to flee.");
             Player.PlayerEndHealth = Player.PlayerHealth;
@@ -216,7 +217,7 @@ namespace Game1
                 else
                 {
                     Console.WriteLine("You manage to escape without further injury.\n");
-                    Aftermath.End(); 
+                    Aftermath.End();
                 }
             }
             else
