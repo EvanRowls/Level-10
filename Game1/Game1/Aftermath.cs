@@ -85,6 +85,8 @@ namespace Game1
                     {
                         case "S":
                             Shop.Open();
+                            Console.WriteLine("\nYou leave the shop.");
+                            Console.ReadKey();
                             break;
                         case "I":
                             Player.Inventory();
@@ -96,6 +98,7 @@ namespace Game1
                             Console.WriteLine("Please enter a valid option.");
                             break;
                     }
+
                 }
                 else
                 {
