@@ -4,9 +4,11 @@ namespace Game1
 {
     class Battle
     {
+        public static bool inBattle;
         public static void Start()
         {
-            Monster Monster1 = new Monster();
+            inBattle = true;
+            Monster.Create();
             Player.PlayerStartHealth = Player.PlayerHealth;
 
             Console.WriteLine("You are level " + Player.PlayerLVL + ".\n");

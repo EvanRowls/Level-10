@@ -8,15 +8,15 @@ namespace Game1
         public static int PlayerEXP = 0, PlayerLVL = 1;
         public static int PlayerHP = 100, PlayerAV = 10;
         public static int LimitBreak = 0;
-        public static string PlayerName = "default";
+        public static string PlayerName;
 
         //Inventory
         public static int Gold = 100;
         public static int TotalPotions;
-        public static int InstantHealthPotions = 3;
-        public static int HealingPotions = 1;
-        public static int SingleAttackPotions = 3;
-        public static int MultiAttackPotions = 1;
+        public static int InstantHealthPotions = 0;
+        public static int HealingPotions = 0;
+        public static int SingleAttackPotions = 0;
+        public static int MultiAttackPotions = 0;
         public static int MonsterMeat = 0;
 
         public static int HealingPotionDuration;
@@ -43,133 +43,175 @@ namespace Game1
 
         public static void Inventory()
         {
-            Console.Clear();
-            TotalPotions = InstantHealthPotions + SingleAttackPotions + HealingPotions + MultiAttackPotions;
-            Console.WriteLine(PlayerName + "'s Inventory\n" +
-                              "-------------\n" +
-                              "1 - Potions\n" +
-                              "2 - Food\n" +
-                              "3 - Items\n" +
-                              "C - continue\n");
-            string choice = Console.ReadLine();
-            choice = choice.ToUpper();
-
-            switch (choice)
+            bool inInventory = true;
+            while (inInventory)
             {
-                case "1":
-                    if (TotalPotions == 0)
-                    {
-                        Console.WriteLine("Nothing Here");
+                Console.Clear();
+                TotalPotions = InstantHealthPotions + SingleAttackPotions + HealingPotions + MultiAttackPotions;
+                Console.WriteLine(PlayerName + "'s Inventory\n" +
+                                  "-------------\n" +
+                                  "1 - Potions\n" +
+                                  "2 - Food\n" +
+                                  "3 - Items\n" +
+                                  "C - continue\n");
+                string choice = Console.ReadLine();
+                choice = choice.ToUpper();
+
+                switch (choice)
+                {
+                    case "1":
+                        if (TotalPotions == 0)
+                        {
+                            Console.WriteLine("Nothing Here");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Potions();
+                        }
+                        break;
+                    case "2":
+                        if (MonsterMeat == 0)
+                        {
+                            Console.WriteLine("Nothing Here");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Food();
+                        }
+                        break;
+                    case "3":
+                        break;
+                    case "C":
+                        inInventory = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice");
                         Console.ReadKey();
-                    }
-                    else
-                    {
-                        Potions();
-                    }
-                    Inventory();
-                    break;
-                case "2":
-                    if (MonsterMeat == 0)
-                    {
-                        Console.WriteLine("Nothing Here");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        Food();
-                    }
-                    Inventory();
-                    break;
-                case "3":
-                    Inventory();
-                    break;
-                case "C":
-                    break;
-                default:
-                    Console.WriteLine("Invalid choice");
-                    Console.ReadKey();
-                    Inventory();
-                    break;
+                        break;
+                }
             }
         }
 
         public static void Potions()
         {
-            Console.WriteLine("1 - Instant Health (" + InstantHealthPotions + ")\n" +
-                              "2 - Healing (" + HealingPotions + ")\n" +
-                              "3 - Attack (" + SingleAttackPotions + ")\n" +
-                              "4 - Strength (" + MultiAttackPotions + ")\n" +
-                              "5 - Go back");
-
-            string choice = Console.ReadLine();
-
-            switch (choice)
+            Console.Clear();
+            bool inPotions = true;
+            while (inPotions)
             {
-                case "1":
-                    if (InstantHealthPotions == 0)
+                if (Battle.inBattle)
+                {
+                    Console.WriteLine("1 - Instant Health (" + InstantHealthPotions + ")\n" +
+                                      "2 - Healing (" + HealingPotions + ")\n" +
+                                      "3 - Attack (" + SingleAttackPotions + ")\n" +
+                                      "4 - Strength (" + MultiAttackPotions + ")\n" +
+                                      "5 - Go back");
+
+                    string choice = Console.ReadLine();
+
+                    switch (choice)
                     {
-                        Console.WriteLine("You have no health potions\n");
-                        Console.ReadKey();
+                        case "1":
+                            if (InstantHealthPotions == 0)
+                            {
+                                Console.WriteLine("You have no instant health potions\n");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                InstantHealthPotions -= 1;
+                                PlayerHealth += 100;
+                                PlayerHealth = Math.Min(PlayerHealth, PlayerMaxHealth);
+                                Console.WriteLine("You drink a health potion.\nHealth increased to " + PlayerHealth + "\n");
+                                Console.ReadKey();
+                            }
+                            break;
+                        case "2":
+                            if (HealingPotions == 0)
+                            {
+                                Console.WriteLine("You have no health potions\n");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                HealingPotions -= 1;
+                                HealingPotionDuration = 3;
+                                HealingPotionActive = true;
+                                Console.WriteLine("You drink a healing potion.\nHealth will be restored over the next three turns\n");
+                                Console.ReadKey();
+                            }
+                            break;
+                        case "3":
+                            if (SingleAttackPotions == 0)
+                            {
+                                Console.WriteLine("You have no attack boost potions\n");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                SingleAttackPotions -= 1;
+                                AttackPotionDamageBoostActive = true;
+                                Console.WriteLine("You take an attack boost potion.\nYour next attack will deal more damage\n");
+                                Console.ReadKey();
+                            }
+                            break;
+                        case "4":
+                            if (MultiAttackPotions == 0)
+                            {
+                                Console.WriteLine("You have no strength potions\n");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                MultiAttackPotions -= 1;
+                                MultiAttackPotionDuration = 3;
+                                MultiAttackPotionActive = true;
+                                Console.WriteLine("You take a strength potion.\nYour next three attacks will deal slightly more damage\n");
+                                Console.ReadKey();
+                            }
+                            break;
+                        case "5":
+                            inPotions = false;
+                            break;
+                        default:
+                            Console.WriteLine("Not recognized\n");
+                            Console.ReadKey();
+                            break;
                     }
-                    else
+                }
+                else
+                {
+                    Console.WriteLine("1 - Instant Health (" + InstantHealthPotions + ")\n" +
+                                      "2 - Go back");
+
+                    string choice = Console.ReadLine();
+
+                    switch (choice)
                     {
-                        InstantHealthPotions -= 1;
-                        PlayerHealth += 100;
-                        PlayerHealth = Math.Min(PlayerHealth, PlayerMaxHealth);
-                        Console.WriteLine("You drink a health potion.\nHealth increased to " + PlayerHealth + "\n");
-                        Console.ReadKey();
+                        case "1":
+                            if (InstantHealthPotions == 0)
+                            {
+                                Console.WriteLine("You have no instant health potions\n");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                InstantHealthPotions -= 1;
+                                PlayerHealth += 100;
+                                PlayerHealth = Math.Min(PlayerHealth, PlayerMaxHealth);
+                                Console.WriteLine("You drink a health potion.\nHealth increased to " + PlayerHealth + "\n");
+                                Console.ReadKey();
+                            }
+                            break;
+                        case "2":
+                            inPotions = false;
+                            break;
+                        default:
+                            Console.WriteLine("Not recognized\n");
+                            break;
                     }
-                    break;
-                case "2":
-                    if (HealingPotions == 0)
-                    {
-                        Console.WriteLine("You have no health potions\n");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        HealingPotions -= 1;
-                        HealingPotionDuration = 3;
-                        HealingPotionActive = true;
-                        Console.WriteLine("You drink a healing potion.\nHealth will be restored over the next three turns\n");
-                        Console.ReadKey();
-                    }
-                    break;
-                case "3":
-                    if (SingleAttackPotions == 0)
-                    {
-                        Console.WriteLine("You have no attack boost potions\n");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        SingleAttackPotions -= 1;
-                        AttackPotionDamageBoostActive = true;
-                        Console.WriteLine("You take an attack boost potion.\nYour next attack will deal more damage\n");
-                        Console.ReadKey();
-                    }
-                    break;
-                case "4":
-                    if (MultiAttackPotions == 0)
-                    {
-                        Console.WriteLine("You have no strength potions\n");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        MultiAttackPotions -= 1;
-                        MultiAttackPotionDuration = 3;
-                        MultiAttackPotionActive = true;
-                        Console.WriteLine("You take a strength potion.\nYour next three attacks will deal slightly more damage\n");
-                        Console.ReadKey();
-                    }
-                    break;
-                case "5":
-                    break;
-                default:
-                    Console.WriteLine("Not recognized\n");
-                    Console.ReadKey();
-                    break;
+                }
             }
         }
         public static void Food()

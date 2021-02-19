@@ -7,6 +7,7 @@ namespace Game1
         public static bool resume = false;
         public static void End()
         {
+            Battle.inBattle = false;
             if (Monster.MonsterHP <= 0 && Player.PlayerHealth > 0)
             {
                 Random randEXP = new Random();
@@ -38,14 +39,15 @@ namespace Game1
                     }
                     else
                     {
-                        Console.WriteLine("Congratulations, you are now unstoppable.\nPress enter to continue fighting.\n");
+                        Console.Clear();
+                        Console.WriteLine("Congratulations, you have reached level 10, you are now unstoppable.\nPress enter to continue fighting.\n");
                         Console.ReadLine();
+                        Console.Clear();
                         resume = true;
                     }
                 }
                 else
                 {
-                    PostBattle();
                     Console.Clear();
                     Battle.Start();
                 }
@@ -60,6 +62,7 @@ namespace Game1
                 Console.Clear();
                 Battle.Start();
             }
+            Battle.Start();
 
         }
         public static void PostBattle()
@@ -104,7 +107,6 @@ namespace Game1
                 {
                     Console.WriteLine("I - Open your inventory\nEnter - Continue on");
                     string choice = Console.ReadLine();
-                    Console.WriteLine(chance);
                     choice = choice.ToUpper();
                     switch (choice)
                     {
